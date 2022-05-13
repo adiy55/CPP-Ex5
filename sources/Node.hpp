@@ -18,7 +18,13 @@ namespace ariel {
 
         Node(const std::string &name);
 
-        void addChild(Node* child);
+        void addChild(Node *child);
+
+        std::vector<Node *> &getChildren();
+
+        std::size_t size() const;
+
+        friend std::ostream &operator<<(std::ostream &out, const Node &node);
 
     };
 
