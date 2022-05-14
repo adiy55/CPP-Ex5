@@ -6,6 +6,7 @@ namespace ariel {
     OrgChart::OrgChart() : _root{nullptr} {}
 
     OrgChart::~OrgChart() {
+        if (_root == nullptr) return;
         std::queue<Node *> node_queue;
         node_queue.push(_root);
         while (!node_queue.empty()) {
@@ -18,7 +19,7 @@ namespace ariel {
         }
     }
 
-    OrgChart &OrgChart::add_root(const std::string &root) {
+    OrgChart &OrgChart::add_root(const std::string &root) { // todo
         _root = new Node{root};
         _node_map[root] = _root;
         return *this;
@@ -26,6 +27,9 @@ namespace ariel {
 
     OrgChart &OrgChart::add_sub(const std::string &parent, const std::string &child) {
         bool found = false;
+        // https://stackoverflow.com/questions/6897737/using-the-operator-efficiently-with-c-unordered-map
+//        Node* curr_parent = _node_map[parent];
+
         for (auto &[key, value]: _node_map) {
             if (key == parent) {
                 found = true;
@@ -59,8 +63,8 @@ namespace ariel {
         return Iterator{};
     }
 
-    Iterator OrgChart::begin_preorder() {
-        return Iterator{_root};
+    PreorderIterator OrgChart::begin_preorder() {
+        return PreorderIterator{_root};
     }
 
     Iterator OrgChart::end_preorder() {

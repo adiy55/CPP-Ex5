@@ -2,11 +2,12 @@
 
 namespace ariel {
 
-    LevelOrderIterator::LevelOrderIterator(Node *ptr) : Iterator{ptr}, __queue{} {
+    LevelOrderIterator::LevelOrderIterator(Node *ptr)
+            : Iterator{ptr}, __queue{} {
         __queue.push(_ptr);
     }
 
-    void LevelOrderIterator::next() {
+    void LevelOrderIterator::next() { // todo: test case for nullptr
         if (__queue.empty()) {
             _ptr = nullptr;
         } else {
@@ -23,6 +24,5 @@ namespace ariel {
         this->next();
         return Iterator::operator++();
     }
-
 
 }

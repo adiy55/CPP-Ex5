@@ -7,6 +7,7 @@
 #include "Node.hpp"
 #include "Iterator.hpp"
 #include "LevelOrderIterator.hpp"
+#include "PreorderIterator.hpp"
 
 namespace ariel {
 
@@ -31,13 +32,13 @@ namespace ariel {
 
         LevelOrderIterator begin_level_order();
 
-        Iterator end_level_order();;
+        Iterator end_level_order();
 
         Iterator begin_reverse_order();
 
         Iterator reverse_order();
 
-        Iterator begin_preorder();
+        PreorderIterator begin_preorder();
 
         Iterator end_preorder();
 
