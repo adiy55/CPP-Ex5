@@ -2,8 +2,8 @@
 
 namespace ariel {
 
-    Iterator::Iterator(Node *ptr) : _ptr{ptr} {}
-
+    Iterator::Iterator(Node *ptr)
+            : _ptr{ptr} {}
 
     Node &Iterator::operator*() { return *_ptr; }
 
@@ -21,7 +21,6 @@ namespace ariel {
 //        this->next();
         return *this;
     }
-
 
 
 }

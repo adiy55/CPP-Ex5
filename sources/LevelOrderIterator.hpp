@@ -9,13 +9,13 @@ namespace ariel {
     class LevelOrderIterator : public Iterator {
 
     private:
-        std::queue<Node *> __queue;
+        std::queue<Node *> __node_queue;
 
         void next();
 
     public:
 
-        explicit LevelOrderIterator(Node* ptr);
+        explicit LevelOrderIterator(Node* ptr = nullptr);
 
         Iterator& operator++() override;
 

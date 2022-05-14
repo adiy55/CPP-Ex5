@@ -19,7 +19,7 @@ namespace ariel {
 
     public:
 
-        PreorderIterator(Node *ptr);
+        explicit PreorderIterator(Node *ptr = nullptr);
 
         Iterator &operator++() override;
 
