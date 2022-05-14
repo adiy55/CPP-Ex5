@@ -42,9 +42,9 @@ namespace ariel {
 
         Iterator end_preorder();
 
-//        Iterator begin();
-//
-//        Iterator end();
+        LevelOrderIterator begin();
+
+        Iterator end();
 
         friend std::ostream &operator<<(std::ostream &out, const OrgChart &chart);
 

@@ -5,6 +5,7 @@ namespace ariel {
     LevelOrderIterator::LevelOrderIterator(Node *ptr)
             : Iterator{ptr}, __queue{} {
         __queue.push(_ptr);
+        this->next();
     }
 
     void LevelOrderIterator::next() { // todo: test case for nullptr
@@ -22,7 +23,7 @@ namespace ariel {
 
     Iterator &LevelOrderIterator::operator++() {
         this->next();
-        return Iterator::operator++();
+        return *this;
     }
 
 }

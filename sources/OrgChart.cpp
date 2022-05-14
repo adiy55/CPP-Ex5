@@ -71,4 +71,12 @@ namespace ariel {
         return Iterator{};
     }
 
+    LevelOrderIterator OrgChart::begin() {
+        return LevelOrderIterator{_root};
+    }
+
+    Iterator OrgChart::end() {
+        return Iterator{};
+    }
+
 }
