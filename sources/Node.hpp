@@ -12,9 +12,9 @@ namespace ariel {
         std::string _name;
         std::vector<Node *> _children;
 
-    public:
+        static void validateName(const std::string& name) ;
 
-        Node();
+    public:
 
         Node(const std::string &name);
 
