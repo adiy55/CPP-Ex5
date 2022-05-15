@@ -115,7 +115,7 @@ TEST_CASE ("Invalid names") {
 
                 SUBCASE("Add subordinate to same position") {
                     CHECK_THROWS(organization.add_sub("CEO", "CEO"));
-                    organization.add_sub("CEO", "CTO");
+            organization.add_sub("CEO", "CTO");
                     CHECK_THROWS(organization.add_sub("CTO", "CTO"));
         }
 
@@ -124,6 +124,33 @@ TEST_CASE ("Invalid names") {
                     CHECK_THROWS(organization.add_sub("CTO", "CEO"));
         }
 
+    }
+
+}
+
+TEST_CASE ("Empty OrgChart") {
+    OrgChart organization;
+    std::stringstream stream;
+
+            SUBCASE("Check level order iterator") {
+        for (auto &element: organization) {
+            stream << element << " ";
+        }
+                CHECK(stream.str() == " ");
+    }
+
+            SUBCASE("Check reverse level order iterator") {
+        for (auto it = organization.begin_reverse_order(); it != organization.reverse_order(); ++it) {
+            stream << (*it) << " ";
+        }
+                CHECK(stream.str() == " ");
+    }
+
+            SUBCASE("Check preorder iterator") {
+        for (auto it = organization.begin_preorder(); it != organization.end_preorder(); ++it) {
+            stream << (*it) << " ";
+        }
+                CHECK(stream.str() == " ");
     }
 
 }
