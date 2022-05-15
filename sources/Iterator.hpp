@@ -7,9 +7,11 @@ namespace ariel {
 
     class Iterator {
 
-    private:
+    protected:
 
         Node *_ptr;
+
+//        virtual void next(); // derived classes must implement this
 
     public:
 

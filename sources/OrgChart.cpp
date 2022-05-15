@@ -13,7 +13,19 @@ namespace ariel {
 
     }
 
-    OrgChart::~OrgChart() {}
+    OrgChart::~OrgChart() {
+        if (_root == nullptr) return;
+        std::queue<Node *> node_queue;
+        node_queue.push(_root);
+        while (!node_queue.empty()) {
+            Node *curr_node = node_queue.front();
+            node_queue.pop();
+            for (Node *child: curr_node->getChildren()) {
+                node_queue.push(child);
+            }
+            delete curr_node;
+        }
+    }
 
     OrgChart &OrgChart::operator=(const OrgChart &chart) {
         return *this;
@@ -23,11 +35,27 @@ namespace ariel {
         return *this;
     }
 
-    OrgChart &OrgChart::add_root(const std::string &root) {
+    OrgChart &OrgChart::add_root(const std::string &root) { // todo
+        _root = new Node{root};
+        _node_map[root] = _root;
         return *this;
     }
 
     OrgChart &OrgChart::add_sub(const std::string &parent, const std::string &child) {
+        bool found = false;
+        // https://stackoverflow.com/questions/6897737/using-the-operator-efficiently-with-c-unordered-map
+//        Node* curr_parent = _node_map[parent];
+
+        for (auto &[key, value]: _node_map) {
+            if (key == parent) {
+                found = true;
+                Node *new_child = new Node(child);
+                value->addChild(new_child);
+                _node_map[child] = new_child;
+                break;
+            }
+        }
+        if (!found) { throw std::runtime_error{"Could not find parent node!"}; }
         return *this;
     }
 
@@ -35,32 +63,32 @@ namespace ariel {
         return out;
     }
 
-    Iterator OrgChart::begin_level_order() {
-        return Iterator{_root};
+    LevelOrderIterator OrgChart::begin_level_order() {
+        return LevelOrderIterator{_root};
     }
 
     Iterator OrgChart::end_level_order() {
-        return Iterator{};
+        return Iterator{}; // default is nullptr
     }
 
-    Iterator OrgChart::begin_reverse_order() {
-        return Iterator{_root};
+    ReverseLevelIterator OrgChart::begin_reverse_order() {
+        return ReverseLevelIterator{_root};
     }
 
     Iterator OrgChart::reverse_order() {
         return Iterator{};
     }
 
-    Iterator OrgChart::begin_preorder() {
-        return Iterator{_root};
+    PreorderIterator OrgChart::begin_preorder() {
+        return PreorderIterator{_root};
     }
 
     Iterator OrgChart::end_preorder() {
         return Iterator{};
     }
 
-    Iterator OrgChart::begin() {
-        return Iterator{_root};
+    LevelOrderIterator OrgChart::begin() {
+        return LevelOrderIterator{_root};
     }
 
     Iterator OrgChart::end() {

@@ -18,6 +18,7 @@ namespace ariel {
     }
 
     Iterator &Iterator::operator++() {
+//        this->next();
         return *this;
     }
 
