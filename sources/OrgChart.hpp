@@ -8,6 +8,7 @@
 #include "Iterator.hpp"
 #include "LevelOrderIterator.hpp"
 #include "PreorderIterator.hpp"
+#include "ReverseLevelIterator.hpp"
 
 namespace ariel {
 
@@ -15,7 +16,7 @@ namespace ariel {
 
     private:
 
-        Node *_root;
+        Node *_root{};
         std::unordered_map<std::string, Node *> _node_map;
 
     public:
@@ -24,7 +25,13 @@ namespace ariel {
 
         OrgChart(const OrgChart &chart);
 
+        OrgChart(OrgChart &&chart) noexcept;
+
         ~OrgChart();
+
+        OrgChart &operator=(const OrgChart &chart);
+
+        OrgChart &operator=(OrgChart &&chart) noexcept;
 
         OrgChart &add_root(const std::string &root);
 
@@ -34,7 +41,7 @@ namespace ariel {
 
         Iterator end_level_order();
 
-        Iterator begin_reverse_order();
+        ReverseLevelIterator begin_reverse_order();
 
         Iterator reverse_order();
 

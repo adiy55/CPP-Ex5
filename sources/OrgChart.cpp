@@ -5,6 +5,14 @@ namespace ariel {
 
     OrgChart::OrgChart() : _root{nullptr} {}
 
+    OrgChart::OrgChart(const OrgChart &chart) {
+
+    }
+
+    OrgChart::OrgChart(OrgChart &&chart) noexcept {
+
+    }
+
     OrgChart::~OrgChart() {
         if (_root == nullptr) return;
         std::queue<Node *> node_queue;
@@ -17,6 +25,14 @@ namespace ariel {
             }
             delete curr_node;
         }
+    }
+
+    OrgChart &OrgChart::operator=(const OrgChart &chart) {
+        return *this;
+    }
+
+    OrgChart &OrgChart::operator=(OrgChart &&chart) noexcept {
+        return *this;
     }
 
     OrgChart &OrgChart::add_root(const std::string &root) { // todo
@@ -55,8 +71,8 @@ namespace ariel {
         return Iterator{}; // default is nullptr
     }
 
-    Iterator OrgChart::begin_reverse_order() {
-        return Iterator{_root};
+    ReverseLevelIterator OrgChart::begin_reverse_order() {
+        return ReverseLevelIterator{_root};
     }
 
     Iterator OrgChart::reverse_order() {
