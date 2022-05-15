@@ -5,9 +5,23 @@ namespace ariel {
 
     OrgChart::OrgChart() : _root{nullptr} {}
 
+    OrgChart::OrgChart(const OrgChart &chart) {
+
+    }
+
+    OrgChart::OrgChart(OrgChart &&chart) noexcept {
+
+    }
+
     OrgChart::~OrgChart() {}
 
-    OrgChart::OrgChart(const OrgChart &chart) {}
+    OrgChart &OrgChart::operator=(const OrgChart &chart) {
+        return *this;
+    }
+
+    OrgChart &OrgChart::operator=(OrgChart &&chart) noexcept {
+        return *this;
+    }
 
     OrgChart &OrgChart::add_root(const std::string &root) {
         return *this;

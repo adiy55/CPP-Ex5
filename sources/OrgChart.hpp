@@ -21,7 +21,13 @@ namespace ariel {
 
         OrgChart(const OrgChart &chart);
 
+        OrgChart(OrgChart &&chart) noexcept;
+
         ~OrgChart();
+
+        OrgChart &operator=(const OrgChart &chart);
+
+        OrgChart &operator=(OrgChart &&chart) noexcept;
 
         OrgChart &add_root(const std::string &root);
 
