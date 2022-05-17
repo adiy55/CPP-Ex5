@@ -20,7 +20,7 @@ namespace ariel {
     }
 
     std::size_t Node::size() const {
-        return 0;
+        return _name.size();
     }
 
     void Node::validateName(const std::string &name) {

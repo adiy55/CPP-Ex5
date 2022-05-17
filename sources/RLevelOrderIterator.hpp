@@ -2,10 +2,18 @@
 #define CPP_EX5_RLEVELORDERITERATOR_HPP
 
 #include "Iterator.hpp"
-
+#include <stack>
 namespace ariel {
 
-    class RLevelOrderIterator : Iterator {
+    class RLevelOrderIterator : public Iterator {
+
+    private:
+
+        std::stack<Node *> _node_stack;
+
+        void next();
+
+        void pushLevels(Node *node);
 
     public:
 
