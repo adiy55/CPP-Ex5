@@ -36,6 +36,7 @@ namespace ariel {
     }
 
     OrgChart &OrgChart::add_root(const std::string &root) { // todo
+//        if(_root == nullptr) _root
         _root = new Node{root};
         _node_map[root] = _root;
         return *this;
@@ -67,32 +68,32 @@ namespace ariel {
         return LevelOrderIterator{_root};
     }
 
-    Iterator OrgChart::end_level_order() {
-        return Iterator{}; // default is nullptr
+    LevelOrderIterator OrgChart::end_level_order() {
+        return LevelOrderIterator{}; // default is nullptr
     }
 
-    ReverseLevelIterator OrgChart::begin_reverse_order() {
-        return ReverseLevelIterator{_root};
+    RLevelOrderIterator OrgChart::begin_reverse_order() {
+        return RLevelOrderIterator{_root};
     }
 
-    Iterator OrgChart::reverse_order() {
-        return Iterator{};
+    RLevelOrderIterator OrgChart::reverse_order() {
+        return RLevelOrderIterator{};
     }
 
     PreorderIterator OrgChart::begin_preorder() {
         return PreorderIterator{_root};
     }
 
-    Iterator OrgChart::end_preorder() {
-        return Iterator{};
+    PreorderIterator OrgChart::end_preorder() {
+        return PreorderIterator{};
     }
 
     LevelOrderIterator OrgChart::begin() {
         return LevelOrderIterator{_root};
     }
 
-    Iterator OrgChart::end() {
-        return Iterator{};
+    LevelOrderIterator OrgChart::end() {
+        return LevelOrderIterator{};
     }
 
 }

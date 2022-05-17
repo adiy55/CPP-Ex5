@@ -8,7 +8,7 @@
 #include "Iterator.hpp"
 #include "LevelOrderIterator.hpp"
 #include "PreorderIterator.hpp"
-#include "ReverseLevelIterator.hpp"
+#include "RLevelOrderIterator.hpp"
 
 namespace ariel {
 
@@ -39,19 +39,19 @@ namespace ariel {
 
         LevelOrderIterator begin_level_order();
 
-        Iterator end_level_order();
+        LevelOrderIterator end_level_order();
 
-        ReverseLevelIterator begin_reverse_order();
+        RLevelOrderIterator begin_reverse_order();
 
-        Iterator reverse_order();
+        RLevelOrderIterator reverse_order();
 
         PreorderIterator begin_preorder();
 
-        Iterator end_preorder();
+        PreorderIterator end_preorder();
 
         LevelOrderIterator begin();
 
-        Iterator end();
+        LevelOrderIterator end();
 
         friend std::ostream &operator<<(std::ostream &out, const OrgChart &chart);
 

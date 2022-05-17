@@ -3,21 +3,22 @@
 namespace ariel {
 
     LevelOrderIterator::LevelOrderIterator(Node *ptr)
-            : Iterator{ptr}, __node_queue{} {
-        __node_queue.push(_ptr);
-        this->next();
-    }
+            : Iterator{ptr}, _node_queue{} {}
 
     void LevelOrderIterator::next() { // todo: test case for nullptr
-        if (__node_queue.empty()) {
+        this->pushChildren(_ptr);
+        if (_node_queue.empty()) {
             _ptr = nullptr;
         } else {
-            Node *curr_node = __node_queue.front();
-            __node_queue.pop();
-            for (Node *child: curr_node->getChildren()) {
-                __node_queue.push(child);
-            }
+            Node *curr_node = _node_queue.front();
+            _node_queue.pop();
             _ptr = curr_node;
+        }
+    }
+
+    void LevelOrderIterator::pushChildren(Node *node) {
+        for (Node *child: node->getChildren()) {
+            _node_queue.push(child);
         }
     }
 

@@ -17,10 +17,10 @@ namespace ariel {
         return !(this->operator==(other));
     }
 
-    Iterator &Iterator::operator++() {
+//    Iterator &Iterator::operator++() {
 //        this->next();
-        return *this;
-    }
+//        return *this;
+//    }
 
 
 }

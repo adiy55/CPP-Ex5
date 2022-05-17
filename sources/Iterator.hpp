@@ -11,7 +11,7 @@ namespace ariel {
 
         Node *_ptr;
 
-//        virtual void next(); // derived classes must implement this
+//        virtual void next() = 0; // derived classes must implement this
 
     public:
 
@@ -25,7 +25,7 @@ namespace ariel {
 
         bool operator!=(const Iterator &other) const;
 
-        virtual Iterator &operator++();
+        virtual Iterator &operator++() = 0;
 
     };
 

@@ -4,6 +4,7 @@
 #include "Iterator.hpp"
 #include <vector>
 #include "Node.hpp"
+#include <stack>
 
 namespace ariel {
 
@@ -11,11 +12,11 @@ namespace ariel {
 
     private:
 
-        std::vector<Node *> __node_list;
+        std::stack<Node *> _node_stack;
 
-        std::size_t __index;
+        void next();
 
-        void dfs();
+        void pushChildren(Node* node);
 
     public:
 

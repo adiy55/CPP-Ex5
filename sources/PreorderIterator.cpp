@@ -1,39 +1,32 @@
 #include "PreorderIterator.hpp"
 #include <stack>
-#include <set>
 
 namespace ariel {
 
     PreorderIterator::PreorderIterator(Node *ptr)
-            : Iterator{ptr}, __node_list{}, __index{0} {
-        this->dfs(); // setup
+            : Iterator{ptr}, _node_stack{} {
     }
 
-    void PreorderIterator::dfs() {
-        std::set<Node const *> visited_nodes;
-        std::stack<Node *> node_stack;
-        visited_nodes.insert(_ptr);
-        node_stack.push(_ptr);
-        while (!node_stack.empty()) {
-            Node *curr_node = node_stack.top();
-            node_stack.pop();
-            __node_list.push_back(curr_node);
-            std::vector<Node *> &children = curr_node->getChildren();
-            for (int i = children.size() - 1; i >= 0; --i) {
-                Node *child = children[static_cast<std::size_t>(i)];
-                if (visited_nodes.count(child) == 0) {
-                    visited_nodes.insert(child);
-                    node_stack.push(child);
-                }
-            }
+
+    Iterator &PreorderIterator::operator++() {
+        this->next();
+        return *this;
+    }
+
+    void PreorderIterator::next() {
+        this->pushChildren(_ptr);
+        if (_node_stack.empty()) {
+            _ptr = nullptr;
+        } else {
+            Node *curr_node = _node_stack.top();
+            _node_stack.pop();
+            _ptr = curr_node;
         }
     }
 
-    Iterator &PreorderIterator::operator++() {
-        ++__index;
-        if (__index == __node_list.size()) { _ptr = nullptr; }
-        else { _ptr = __node_list[__index]; }
-        return *this;
+    void PreorderIterator::pushChildren(Node *node) {
+        std::vector<Node *> &children = node->getChildren();
+        std::for_each(children.rbegin(), children.rend(), [this](Node *child) { _node_stack.push(child); });
     }
 
 }
