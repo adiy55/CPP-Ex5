@@ -21,6 +21,8 @@ namespace ariel {
 
     public:
 
+        static void print_chart(std::ostream &out, unsigned int depth, Node *node);
+
         OrgChart();
 
         OrgChart(const OrgChart &chart);

@@ -85,21 +85,24 @@ namespace ariel {
     }
 
     std::ostream &operator<<(std::ostream &out, const OrgChart &chart) {
-        std::string space{"      "};
-        out << *chart._root << '\n';
-        std::queue<Node *> node_queue;
-        node_queue.push(chart._root);
-        Node *curr_node = nullptr;
-        while (!node_queue.empty()) {
-            curr_node = node_queue.front();
-            node_queue.pop();
-            for (Node *child: curr_node->getChildren()) {
-                out << *child << ' ';
-            }
+        if (chart._root != nullptr) {
+            OrgChart::print_chart(out, 0, chart._root);
+        }
+        return out;
+    }
 
+    void OrgChart::print_chart(std::ostream &out, unsigned int depth, Node *node) {
+        std::string spaces(depth * 3, ' ');
+        if (depth == 0) {
+            out << *node << '\n';
+        } else {
+            out << spaces << "|--" << *node << '\n';
+        }
+        std::vector<Node *> curr_children = node->getChildren();
+        for (Node *child: curr_children) {
+            print_chart(out, depth + 1, child);
         }
 
-        return out;
     }
 
     LevelOrderIterator OrgChart::begin_level_order() {
