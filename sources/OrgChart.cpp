@@ -44,10 +44,8 @@ namespace ariel {
 
     OrgChart &OrgChart::operator=(const OrgChart &chart) {
         OrgChart new_chart{chart};
-        Node *tmp = new_chart._root;
-        new_chart._root = _root;
-        _root = tmp;
-//        std::swap(*this, new_chart);
+        std::swap(_root, new_chart._root);
+        std::swap(_node_map, new_chart._node_map);
         return *this;
     }
 
@@ -67,20 +65,12 @@ namespace ariel {
     }
 
     OrgChart &OrgChart::add_sub(const std::string &parent, const std::string &child) {
-        bool found = false;
         // https://stackoverflow.com/questions/6897737/using-the-operator-efficiently-with-c-unordered-map
-//        Node* curr_parent = _node_map[parent];
-
-        for (auto &[key, value]: _node_map) {
-            if (key == parent) {
-                found = true;
-                Node *new_child = new Node(child);
-                value->addChild(new_child);
-                _node_map[child] = new_child;
-                break;
-            }
-        }
-        if (!found) { throw std::runtime_error{"Could not find parent node!"}; }
+        Node *curr_parent = _node_map[parent];
+        if (curr_parent == nullptr) { throw std::runtime_error{"Could not find parent node!"}; }
+        Node *new_child = new Node(child);
+        curr_parent->addChild(new_child);
+        _node_map[child] = new_child;
         return *this;
     }
 
@@ -102,7 +92,6 @@ namespace ariel {
         for (Node *child: curr_children) {
             print_chart(out, depth + 1, child);
         }
-
     }
 
     LevelOrderIterator OrgChart::begin_level_order() {
