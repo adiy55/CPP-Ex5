@@ -5,9 +5,9 @@ namespace ariel {
     Iterator::Iterator(Node *ptr)
             : _ptr{ptr} {}
 
-    Node &Iterator::operator*() { return *_ptr; }
+    std::string &Iterator::operator*() const { return _ptr->getName(); }
 
-    Node *Iterator::operator->() { return _ptr; }
+    std::string *Iterator::operator->() const { return &(_ptr->getName()); }
 
     bool Iterator::operator==(const Iterator &other) const {
         return (_ptr == other._ptr);

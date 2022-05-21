@@ -17,9 +17,9 @@ namespace ariel {
 
         explicit Iterator(Node *ptr = nullptr);
 
-        Node &operator*();
+        std::string &operator*() const;
 
-        Node *operator->();
+        std::string *operator->() const;
 
         bool operator==(const Iterator &other) const;
 

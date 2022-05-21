@@ -1,16 +1,31 @@
 #include "OrgChart.hpp"
 #include <queue>
+#include <iostream>
 
 namespace ariel {
 
     OrgChart::OrgChart() : _root{nullptr} {}
 
     OrgChart::OrgChart(const OrgChart &chart) {
-
+        _root = nullptr;
+        std::queue<Node *> node_queue;
+        Node *curr_node = nullptr;
+        if (chart._root != nullptr) {
+            this->add_root(chart._root->getName());
+            node_queue.push(chart._root);
+            while (!node_queue.empty()) {
+                curr_node = node_queue.front();
+                node_queue.pop();
+                for (Node *child: curr_node->getChildren()) {
+                    node_queue.push(child);
+                    this->add_sub(curr_node->getName(), child->getName());
+                }
+            }
+        }
     }
 
     OrgChart::OrgChart(OrgChart &&chart) noexcept {
-
+        // ignore
     }
 
     OrgChart::~OrgChart() {
@@ -28,6 +43,8 @@ namespace ariel {
     }
 
     OrgChart &OrgChart::operator=(const OrgChart &chart) {
+        OrgChart new_chart{chart};
+        std::swap(*this, new_chart);
         return *this;
     }
 
@@ -36,9 +53,13 @@ namespace ariel {
     }
 
     OrgChart &OrgChart::add_root(const std::string &root) { // todo
-//        if(_root == nullptr) _root
-        _root = new Node{root};
-        _node_map[root] = _root;
+        if (_root == nullptr) {
+            _root = new Node{root};
+            _node_map[root] = _root;
+        } else {
+            _node_map.erase(root);
+            _root->setName(root);
+        }
         return *this;
     }
 
@@ -61,6 +82,20 @@ namespace ariel {
     }
 
     std::ostream &operator<<(std::ostream &out, const OrgChart &chart) {
+        std::string space{"      "};
+        out << *chart._root << '\n';
+        std::queue<Node *> node_queue;
+        node_queue.push(chart._root);
+        Node *curr_node = nullptr;
+        while (!node_queue.empty()) {
+            curr_node = node_queue.front();
+            node_queue.pop();
+            for (Node *child: curr_node->getChildren()) {
+                out << *child << ' ';
+            }
+
+        }
+
         return out;
     }
 

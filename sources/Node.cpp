@@ -19,9 +19,11 @@ namespace ariel {
         return out;
     }
 
-    std::size_t Node::size() const {
-        return _name.size();
-    }
+    std::size_t Node::size() const { return _name.size(); }
+
+    void Node::setName(const std::string &name) { _name = name; }
+
+    std::string &Node::getName() { return _name; }
 
     void Node::validateName(const std::string &name) {
         std::regex valid_format{R"([a-zA-z_]+)"};

@@ -24,6 +24,10 @@ namespace ariel {
 
         std::size_t size() const;
 
+        void setName(const std::string& name);
+
+        std::string& getName();
+
         friend std::ostream &operator<<(std::ostream &out, const Node &node);
 
     };
