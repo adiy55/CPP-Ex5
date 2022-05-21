@@ -25,14 +25,6 @@ TEST_CASE ("Basic functions") {
             }
                     CHECK(str == "Head_of_Org CTO CFO COO VP_SW VP_BI ");
         }
-
-//                SUBCASE("Check size function") {
-//            for (auto &element: organization) {
-//                str += element.size();
-//                str += " ";
-//            }
-//                    CHECK(str == "11 3 3 3 5 5 6 ");
-//        }
     }
 
             SUBCASE("Add sub") {
@@ -60,14 +52,6 @@ TEST_CASE ("Basic functions") {
             }
                     CHECK(str == "CEO CTO VP_SW CFO COO VP_BI VP_BII ");
         }
-
-//                SUBCASE("Check size function") {
-//            for (auto &element: organization) {
-//                str += element.size();
-//                str += " ";
-//            }
-//                    CHECK(str == "3 3 3 3 5 5 6 ");
-//        }
     }
 
 }
@@ -160,13 +144,34 @@ TEST_CASE ("Empty OrgChart") {
 
 
 TEST_CASE ("Copy Assignment operator") {
-    OrgChart organization;
-    organization.add_root("CEO")
-            .add_sub("CEO", "CTO")
-            .add_sub("CEO", "CFO")
-            .add_sub("CEO", "COO")
-            .add_sub("CTO", "VP_SW")
-            .add_sub("COO", "VP_BI");
 
+            SUBCASE("Empty chart") {
+        OrgChart chart1{};
+        OrgChart chart2 = chart1;
+                CHECK(&chart1 != &chart2);
+    }
+
+            SUBCASE("Chart with root") {
+        OrgChart chart1{};
+        chart1.add_root("CEO");
+        OrgChart chart2 = chart1;
+                CHECK(&chart1 != &chart2);
+        for (auto it1 = chart1.begin(), it2 = chart2.begin();
+             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+                    CHECK(*it1 == *it2);
+        }
+        chart2.add_root("Elon");
+        for (auto it1 = chart1.begin(), it2 = chart2.begin();
+             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+                    CHECK(*it1 != *it2);
+        }
+
+    }
+
+
+}
+
+
+TEST_CASE ("Large Tree") {
 
 }
