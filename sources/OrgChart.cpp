@@ -44,7 +44,10 @@ namespace ariel {
 
     OrgChart &OrgChart::operator=(const OrgChart &chart) {
         OrgChart new_chart{chart};
-        std::swap(*this, new_chart);
+        Node *tmp = new_chart._root;
+        new_chart._root = _root;
+        _root = tmp;
+//        std::swap(*this, new_chart);
         return *this;
     }
 
