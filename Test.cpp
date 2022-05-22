@@ -1,6 +1,5 @@
 #include "doctest.h"
 #include "sources/OrgChart.hpp"
-#include <sstream>
 #include <string>
 
 using namespace ariel;
@@ -148,22 +147,22 @@ TEST_CASE ("Copy Assignment operator") {
             SUBCASE("Empty chart") {
         OrgChart chart1{};
         OrgChart chart2 = chart1;
-                CHECK(&chart1 != &chart2);
+                CHECK(&chart1 != &chart2); // compare addresses
     }
 
-            SUBCASE("Chart with root") {
+            SUBCASE("Change chart root after assignment") {
         OrgChart chart1{};
         chart1.add_root("CEO");
         OrgChart chart2 = chart1;
                 CHECK(&chart1 != &chart2);
         for (auto it1 = chart1.begin(), it2 = chart2.begin();
              it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
-                    CHECK(*it1 == *it2);
+                    CHECK(*it1 == *it2); // compare addresses
         }
         chart2.add_root("Elon");
         for (auto it1 = chart1.begin(), it2 = chart2.begin();
              it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
-                    CHECK(*it1 != *it2);
+                    CHECK(*it1 != *it2); // compare addresses
         }
 
     }
@@ -172,6 +171,7 @@ TEST_CASE ("Copy Assignment operator") {
 }
 
 
-TEST_CASE ("Large Tree") {
+TEST_CASE ("Linked List") {
+
 
 }
