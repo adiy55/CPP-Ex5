@@ -22,6 +22,8 @@ namespace ariel {
 
         PreorderIterator &operator++() override;
 
+        PreorderIterator operator++(int);
+
     };
 
 }

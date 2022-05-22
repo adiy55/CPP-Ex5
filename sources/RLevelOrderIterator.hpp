@@ -20,6 +20,8 @@ namespace ariel {
 
         RLevelOrderIterator &operator++() override;
 
+        RLevelOrderIterator operator++(int);
+
     };
 
 }

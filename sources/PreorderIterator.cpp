@@ -23,4 +23,10 @@ namespace ariel {
         std::for_each(children.rbegin(), children.rend(), [this](Node *child) { _node_stack.push(child); });
     }
 
+    PreorderIterator PreorderIterator::operator++(int) {
+        PreorderIterator tmp{*this};
+        ++(*this);
+        return tmp;
+    }
+
 }

@@ -35,4 +35,10 @@ namespace ariel {
             _node_stack.pop();
         }
     }
+
+    RLevelOrderIterator RLevelOrderIterator::operator++(int) {
+        RLevelOrderIterator tmp{*this};
+        ++(*this);
+        return tmp;
+    }
 }
