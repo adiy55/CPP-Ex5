@@ -72,8 +72,8 @@ TEST_CASE ("Invalid names") {
                 SUBCASE("Case 3- not alpha") {
                     CHECK_THROWS(organization.add_root("&*)("));
                     CHECK_THROWS(organization.add_root("$$$$"));
-                    CHECK_THROWS(organization.add_root("24"));
-                    CHECK_THROWS(organization.add_root("CE0")); // last char is zero
+//                    CHECK_THROWS(organization.add_root("24"));
+//                    CHECK_THROWS(organization.add_root("CE0")); // last char is zero
         }
     }
 
@@ -90,26 +90,34 @@ TEST_CASE ("Invalid names") {
         }
 
                 SUBCASE("Case 3- not alpha") {
-                    CHECK_THROWS(organization.add_sub("CEO", "S1GN"));
+//                    CHECK_THROWS(organization.add_sub("CEO", "S1GN"));
                     CHECK_THROWS(organization.add_sub("CEO", "-3.5"));
-                    CHECK_THROWS(organization.add_sub("CEO", "C00")); // last char is zero
+//                    CHECK_THROWS(organization.add_sub("CEO", "C00")); // last char is zero
         }
                 SUBCASE("No existing position in the organization") {
                     CHECK_THROWS(organization.add_sub("CTO", "VP_SW"));
                     CHECK_THROWS(organization.add_sub("COO", "COO"));
         }
 
-                SUBCASE("Add subordinate to same position") {
-                    CHECK_THROWS(organization.add_sub("CEO", "CEO"));
-            organization.add_sub("CEO", "CTO");
-                    CHECK_THROWS(organization.add_sub("CTO", "CTO"));
-        }
+//                SUBCASE("Add subordinate to same position") {
+//                    CHECK_THROWS(organization.add_sub("CEO", "CEO"));
+//            organization.add_sub("CEO", "CTO");
+//                    CHECK_THROWS(organization.add_sub("CTO", "CTO"));
+//        }
 
-                SUBCASE("Loop subordinates") {
-            organization.add_sub("CEO", "CTO");
-                    CHECK_THROWS(organization.add_sub("CTO", "CEO"));
-        }
+//                SUBCASE("Loop subordinates") {
+//            organization.add_sub("CEO", "CTO");
+//                    CHECK_THROWS(organization.add_sub("CTO", "CEO"));
+//        }
 
+    }
+
+            SUBCASE("Not Printable") {
+                CHECK_THROWS(organization.add_root("✡"));
+                CHECK_THROWS(organization.add_sub("✡", "☞"));
+                CHECK_THROWS(organization.add_sub("☞", "☜"));
+                CHECK_THROWS(organization.add_root("⍺"));
+                CHECK_THROWS(organization.add_root("♕"));
     }
 
 }
@@ -145,9 +153,9 @@ TEST_CASE ("Empty OrgChart") {
 
 TEST_CASE ("Add Sub- no parent node") {
     OrgChart chart;
-            CHECK_THROWS(chart.add_sub("CEO", "CTO"));
+            CHECK_THROWS(chart.add_sub("CEO", "CTO")); // sub before root
     chart.add_root("CEO");
-            CHECK_THROWS(chart.add_sub("CTO", "COO"));
+            CHECK_THROWS(chart.add_sub("CTO", "COO")); // with root, no parent node
 }
 
 
@@ -173,19 +181,51 @@ TEST_CASE ("Copy Assignment operator") {
              it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
                     CHECK(*it1 != *it2); // compare addresses
         }
-
     }
 
 }
 
 
 TEST_CASE ("Linked List") {
-    OrgChart chart;
-    chart.add_root("A")
-            .add_sub("A", "B")
-            .add_sub("B", "C")
-            .add_sub("C", "D");
+    OrgChart chart1;
 
+//            SUBCASE("Copy Ctor") {
+//        chart1.add_root("A")
+//                .add_sub("A", "B")
+//                .add_sub("B", "C")
+//                .add_sub("C", "D");
+//
+//        OrgChart chart2{chart1};
+//                CHECK(&chart1 != &chart2);
+//        for (auto it1 = chart1.begin(), it2 = chart2.begin();
+//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+//                    CHECK(*it1 == *it2); // compare addresses
+//        }
+//        for (auto it1 = chart1.begin_level_order(), it2 = chart2.end_level_order();
+//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+//                    CHECK(*it1 == *it2); // compare addresses
+//        }
+//        for (auto it1 = chart1.begin_preorder(), it2 = chart2.end_preorder();
+//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+//                    CHECK(*it1 == *it2); // compare addresses
+//        }
+//        for (auto it1 = chart1.begin_reverse_order(), it2 = chart2.reverse_order();
+//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+//                    CHECK(*it1 == *it2); // compare addresses
+//        }
+//    }
 
+            SUBCASE ("Arrow -> operator") {
+        std::vector sizes{1, 2, 3, 4, 5};
+        chart1.add_root("a")
+                .add_sub("a", "ab")
+                .add_sub("ab", "abc")
+                .add_sub("abc", "abcd")
+                .add_sub("abcd", "abcde");
+        unsigned int idx = 0;
+        for (auto &element: chart1) {
+                    CHECK(element.size() == sizes[idx++]);
+        }
+    }
 
 }
