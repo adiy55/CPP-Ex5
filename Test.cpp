@@ -125,29 +125,10 @@ TEST_CASE ("Invalid names") {
 
 TEST_CASE ("Empty OrgChart") {
     OrgChart organization;
-    std::string str;
-
-            SUBCASE("Check level order iterator") {
-        for (auto &element: organization) {
-            str.append(element + " ");
-        }
-                CHECK(str == "");
-    }
-
-            SUBCASE("Check reverse level order iterator") {
-        for (auto it = organization.begin_reverse_order(); it != organization.reverse_order(); ++it) {
-            str.append(*it + " ");
-        }
-                CHECK(str == "");
-    }
-
-            SUBCASE("Check preorder iterator") {
-        for (auto it = organization.begin_preorder(); it != organization.end_preorder(); ++it) {
-            str.append(*it + " ");
-        }
-                CHECK(str == "");
-    }
-
+            CHECK_THROWS(organization.begin_level_order());
+            CHECK_THROWS(organization.begin_reverse_order());
+            CHECK_THROWS(organization.begin_preorder());
+            CHECK_THROWS(organization.begin());
 }
 
 
@@ -189,31 +170,31 @@ TEST_CASE ("Copy Assignment operator") {
 TEST_CASE ("Linked List") {
     OrgChart chart1;
 
-//            SUBCASE("Copy Ctor") {
-//        chart1.add_root("A")
-//                .add_sub("A", "B")
-//                .add_sub("B", "C")
-//                .add_sub("C", "D");
-//
-//        OrgChart chart2{chart1};
-//                CHECK(&chart1 != &chart2);
-//        for (auto it1 = chart1.begin(), it2 = chart2.begin();
-//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
-//                    CHECK(*it1 == *it2); // compare addresses
-//        }
-//        for (auto it1 = chart1.begin_level_order(), it2 = chart2.end_level_order();
-//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
-//                    CHECK(*it1 == *it2); // compare addresses
-//        }
-//        for (auto it1 = chart1.begin_preorder(), it2 = chart2.end_preorder();
-//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
-//                    CHECK(*it1 == *it2); // compare addresses
-//        }
-//        for (auto it1 = chart1.begin_reverse_order(), it2 = chart2.reverse_order();
-//             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
-//                    CHECK(*it1 == *it2); // compare addresses
-//        }
-//    }
+            SUBCASE("Copy Ctor") {
+        chart1.add_root("A")
+                .add_sub("A", "B")
+                .add_sub("B", "C")
+                .add_sub("C", "D");
+
+        OrgChart chart2{chart1};
+                CHECK(&chart1 != &chart2);
+        for (auto it1 = chart1.begin(), it2 = chart2.begin();
+             it1 != chart1.end() || it2 != chart2.end(); ++it1, ++it2) {
+                    CHECK(*it1 == *it2); // compare addresses
+        }
+        for (auto it1 = chart1.begin_level_order(), it2 = chart2.begin_level_order();
+             it1 != chart1.end_level_order() || it2 != chart2.end_level_order(); ++it1, ++it2) {
+                    CHECK(*it1 == *it2); // compare addresses
+        }
+        for (auto it1 = chart1.begin_preorder(), it2 = chart2.begin_preorder();
+             it1 != chart1.end_preorder() || it2 != chart2.end_preorder(); ++it1, ++it2) {
+                    CHECK(*it1 == *it2); // compare addresses
+        }
+        for (auto it1 = chart1.begin_reverse_order(), it2 = chart2.begin_reverse_order();
+             it1 != chart1.reverse_order() || it2 != chart2.reverse_order(); ++it1, ++it2) {
+                    CHECK(*it1 == *it2); // compare addresses
+        }
+    }
 
             SUBCASE ("Arrow -> operator") {
         std::vector sizes{1, 2, 3, 4, 5};
