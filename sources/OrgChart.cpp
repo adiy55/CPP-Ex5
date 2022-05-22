@@ -113,35 +113,45 @@ namespace ariel {
     }
 
     LevelOrderIterator OrgChart::begin_level_order() {
+        this->validateIterator();
         return LevelOrderIterator{_root};
     }
 
     LevelOrderIterator OrgChart::end_level_order() {
+        this->validateIterator();
         return LevelOrderIterator{}; // default is nullptr
     }
 
     RLevelOrderIterator OrgChart::begin_reverse_order() {
+        this->validateIterator();
         return RLevelOrderIterator{_root};
     }
 
     RLevelOrderIterator OrgChart::reverse_order() {
+        this->validateIterator();
         return RLevelOrderIterator{};
     }
 
     PreorderIterator OrgChart::begin_preorder() {
+        this->validateIterator();
         return PreorderIterator{_root};
     }
 
     PreorderIterator OrgChart::end_preorder() {
+        this->validateIterator();
         return PreorderIterator{};
     }
 
     LevelOrderIterator OrgChart::begin() {
+        this->validateIterator();
         return LevelOrderIterator{_root};
     }
 
     LevelOrderIterator OrgChart::end() {
+        this->validateIterator();
         return LevelOrderIterator{};
     }
+
+    void OrgChart::validateIterator() const { if (_root == nullptr) { throw std::runtime_error{"chart is empty!"}; }}
 
 }

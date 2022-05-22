@@ -22,11 +22,11 @@ namespace ariel {
         return *this;
     }
 
-//    LevelOrderIterator LevelOrderIterator::operator++(int) {
-//        LevelOrderIterator tmp{*this}; // todo: check ctor
-//        ++(*this);
-//        return tmp;
-//    }
+    LevelOrderIterator LevelOrderIterator::operator++(int) {
+        LevelOrderIterator tmp{*this}; // todo: check ctor
+        ++(*this);
+        return tmp;
+    }
 
 
 }

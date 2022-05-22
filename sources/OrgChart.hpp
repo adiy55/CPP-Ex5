@@ -20,6 +20,8 @@ namespace ariel {
         Node *_root{};
         std::unordered_map<std::string, Node *> _node_map;
 
+        void validateIterator() const;
+
     public:
 
         static void printChart(std::ostream &out, unsigned int depth, Node *node);

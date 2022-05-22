@@ -19,7 +19,7 @@ namespace ariel {
 
         LevelOrderIterator& operator++() override;
 
-//        LevelOrderIterator operator++(int);
+        LevelOrderIterator operator++(int);
 
     };
 
