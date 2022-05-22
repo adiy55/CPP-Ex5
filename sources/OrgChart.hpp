@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <iostream>
 #include "Node.hpp"
 #include "Iterator.hpp"
 #include "LevelOrderIterator.hpp"
@@ -21,7 +22,7 @@ namespace ariel {
 
     public:
 
-        static void print_chart(std::ostream &out, unsigned int depth, Node *node);
+        static void printChart(std::ostream &out, unsigned int depth, Node *node);
 
         OrgChart();
 

@@ -4,14 +4,15 @@
 
 namespace ariel {
 
-    OrgChart::OrgChart() : _root{nullptr} {}
+    OrgChart::OrgChart()
+            : _root{nullptr} {}
 
     OrgChart::OrgChart(const OrgChart &chart)
             : _root{nullptr} {
 //        std::cout << "Copy ctor\n";
         if (chart._root != nullptr) {
             std::queue<Node *> node_queue;
-            Node *curr_node; // todo: nullptr?
+            Node *curr_node = nullptr;
             this->add_root(chart._root->getName());
             node_queue.push(chart._root);
             while (!node_queue.empty()) {
@@ -40,7 +41,7 @@ namespace ariel {
 //        std::cout << "Destroyed\n";
         if (_root != nullptr) {
             std::queue<Node *> node_queue;
-            Node *curr_node;
+            Node *curr_node = nullptr;
             node_queue.push(_root);
             while (!node_queue.empty()) {
                 curr_node = node_queue.front();
@@ -74,7 +75,7 @@ namespace ariel {
             _root = new Node{root};
             _node_map[root] = _root;
         } else {
-            _node_map.erase(root); // todo
+            _node_map.erase(_root->getName()); // todo: check
             _node_map[root] = _root;
             _root->setName(root);
         }
@@ -93,21 +94,21 @@ namespace ariel {
 
     std::ostream &operator<<(std::ostream &out, const OrgChart &chart) {
         if (chart._root != nullptr) {
-            OrgChart::print_chart(out, 0, chart._root);
+            OrgChart::printChart(out, 0, chart._root);
         }
         return out;
     }
 
-    void OrgChart::print_chart(std::ostream &out, unsigned int depth, Node *node) {
+    void OrgChart::printChart(std::ostream &out, unsigned int depth, Node *node) {
         std::string spaces(depth * 3, ' ');
         if (depth == 0) {
             out << *node << '\n';
         } else {
-            out << spaces << "|--" << *node << '\n';
+            out << spaces << "+--" << *node << '\n';
         }
         std::vector<Node *> curr_children = node->getChildren();
         for (Node *child: curr_children) {
-            print_chart(out, depth + 1, child);
+            printChart(out, depth + 1, child);
         }
     }
 
