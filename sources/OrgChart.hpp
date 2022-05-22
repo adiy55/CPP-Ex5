@@ -22,9 +22,11 @@ namespace ariel {
 
         void validateIterator() const;
 
-    public:
+        void deleteChart() const;
 
         static void printChart(std::ostream &out, unsigned int depth, Node *node);
+
+    public:
 
         OrgChart();
 

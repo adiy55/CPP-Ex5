@@ -1,6 +1,5 @@
 #include "OrgChart.hpp"
 #include <queue>
-#include <iostream>
 
 namespace ariel {
 
@@ -9,7 +8,6 @@ namespace ariel {
 
     OrgChart::OrgChart(const OrgChart &chart)
             : _root{nullptr} {
-//        std::cout << "Copy ctor\n";
         if (chart._root != nullptr) {
             std::queue<Node *> node_queue;
             Node *curr_node = nullptr;
@@ -32,13 +30,14 @@ namespace ariel {
      */
     OrgChart::OrgChart(OrgChart &&chart) noexcept
             : _root{chart._root}, _node_map{std::move(chart._node_map)} {
-//        std::cout << "Rvalue ctor\n";
         chart._root = nullptr;
-//        chart._node_map = std::unordered_map<std::string, Node *>();
     }
 
     OrgChart::~OrgChart() {
-//        std::cout << "Destroyed\n";
+        this->deleteChart();
+    }
+
+    void OrgChart::deleteChart() const {
         if (_root != nullptr) {
             std::queue<Node *> node_queue;
             Node *curr_node = nullptr;
@@ -64,6 +63,7 @@ namespace ariel {
     }
 
     OrgChart &OrgChart::operator=(OrgChart &&chart) noexcept {
+        this->deleteChart();
         _root = chart._root;
         chart._root = nullptr;
         _node_map = std::move(chart._node_map);
