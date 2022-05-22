@@ -14,15 +14,13 @@ namespace ariel {
 
         std::stack<Node *> _node_stack;
 
-        void next();
-
         void pushChildren(Node* node);
 
     public:
 
-        explicit PreorderIterator(Node *ptr = nullptr);
+        PreorderIterator(Node *ptr = nullptr);
 
-        Iterator &operator++() override;
+        PreorderIterator &operator++() override;
 
     };
 

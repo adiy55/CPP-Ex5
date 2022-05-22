@@ -11,11 +11,9 @@ namespace ariel {
 
         Node *_ptr;
 
-//        virtual void next() = 0; // derived classes must implement this
-
     public:
 
-        explicit Iterator(Node *ptr = nullptr);
+        Iterator(Node *ptr);
 
         std::string &operator*() const;
 
@@ -25,7 +23,10 @@ namespace ariel {
 
         bool operator!=(const Iterator &other) const;
 
-        virtual Iterator &operator++() = 0;
+        /*
+         * https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Covariant_Return_Types
+         */
+        virtual Iterator &operator++() = 0; // derived classes must implement this
 
     };
 

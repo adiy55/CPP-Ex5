@@ -3,18 +3,7 @@
 namespace ariel {
 
     LevelOrderIterator::LevelOrderIterator(Node *ptr)
-            : Iterator{ptr}, _node_queue{} {}
-
-    void LevelOrderIterator::next() { // todo: test case for nullptr
-        this->pushChildren(_ptr);
-        if (_node_queue.empty()) {
-            _ptr = nullptr;
-        } else {
-            Node *curr_node = _node_queue.front();
-            _node_queue.pop();
-            _ptr = curr_node;
-        }
-    }
+            : Iterator{ptr} {}
 
     void LevelOrderIterator::pushChildren(Node *node) {
         for (Node *child: node->getChildren()) {
@@ -22,9 +11,22 @@ namespace ariel {
         }
     }
 
-    Iterator &LevelOrderIterator::operator++() {
-        this->next();
+    LevelOrderIterator &LevelOrderIterator::operator++() { // todo: test case for nullptr
+        this->pushChildren(_ptr);
+        if (_node_queue.empty()) {
+            _ptr = nullptr;
+        } else {
+            _ptr = _node_queue.front();
+            _node_queue.pop();
+        }
         return *this;
     }
+
+//    LevelOrderIterator LevelOrderIterator::operator++(int) {
+//        LevelOrderIterator tmp{*this}; // todo: check ctor
+//        ++(*this);
+//        return tmp;
+//    }
+
 
 }

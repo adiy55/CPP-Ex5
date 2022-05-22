@@ -3,6 +3,7 @@
 
 #include "Iterator.hpp"
 #include <stack>
+
 namespace ariel {
 
     class RLevelOrderIterator : public Iterator {
@@ -11,15 +12,13 @@ namespace ariel {
 
         std::stack<Node *> _node_stack;
 
-        void next();
-
         void pushLevels(Node *node);
 
     public:
 
-        explicit RLevelOrderIterator(Node *ptr = nullptr);
+        RLevelOrderIterator(Node *ptr = nullptr);
 
-        Iterator &operator++() override;
+        RLevelOrderIterator &operator++() override;
 
     };
 

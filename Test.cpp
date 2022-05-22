@@ -114,6 +114,7 @@ TEST_CASE ("Invalid names") {
 
 }
 
+
 TEST_CASE ("Empty OrgChart") {
     OrgChart organization;
     std::string str;
@@ -142,6 +143,14 @@ TEST_CASE ("Empty OrgChart") {
 }
 
 
+TEST_CASE ("Add Sub- no parent node") {
+    OrgChart chart;
+            CHECK_THROWS(chart.add_sub("CEO", "CTO"));
+    chart.add_root("CEO");
+            CHECK_THROWS(chart.add_sub("CTO", "COO"));
+}
+
+
 TEST_CASE ("Copy Assignment operator") {
 
             SUBCASE("Empty chart") {
@@ -167,11 +176,16 @@ TEST_CASE ("Copy Assignment operator") {
 
     }
 
-
 }
 
 
 TEST_CASE ("Linked List") {
+    OrgChart chart;
+    chart.add_root("A")
+            .add_sub("A", "B")
+            .add_sub("B", "C")
+            .add_sub("C", "D");
+
 
 
 }

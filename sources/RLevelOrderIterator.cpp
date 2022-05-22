@@ -1,27 +1,21 @@
 #include <queue>
-#include <iostream>
 #include "RLevelOrderIterator.hpp"
 
 namespace ariel {
 
     RLevelOrderIterator::RLevelOrderIterator(Node *ptr)
-            : Iterator{ptr}, _node_stack{} {
+            : Iterator{ptr} {
         this->pushLevels(_ptr);
     }
 
-    Iterator &RLevelOrderIterator::operator++() {
-        this->next();
-        return *this;
-    }
-
-    void RLevelOrderIterator::next() {
+    RLevelOrderIterator &RLevelOrderIterator::operator++() {
         if (_node_stack.empty()) {
             _ptr = nullptr;
         } else {
-            Node *curr_node = _node_stack.top();
+            _ptr = _node_stack.top();
             _node_stack.pop();
-            _ptr = curr_node;
         }
+        return *this;
     }
 
     void RLevelOrderIterator::pushLevels(Node *node) {

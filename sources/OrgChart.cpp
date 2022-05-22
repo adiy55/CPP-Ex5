@@ -6,11 +6,12 @@ namespace ariel {
 
     OrgChart::OrgChart() : _root{nullptr} {}
 
-    OrgChart::OrgChart(const OrgChart &chart) {
-        _root = nullptr;
-        std::queue<Node *> node_queue;
-        Node *curr_node = nullptr;
+    OrgChart::OrgChart(const OrgChart &chart)
+            : _root{nullptr} {
+//        std::cout << "Copy ctor\n";
         if (chart._root != nullptr) {
+            std::queue<Node *> node_queue;
+            Node *curr_node; // todo: nullptr?
             this->add_root(chart._root->getName());
             node_queue.push(chart._root);
             while (!node_queue.empty()) {
@@ -24,41 +25,57 @@ namespace ariel {
         }
     }
 
-    OrgChart::OrgChart(OrgChart &&chart) noexcept {
-        // ignore
+    /*
+     * https://stackoverflow.com/questions/9249781/are-move-constructors-required-to-be-noexcept
+     * https://en.cppreference.com/w/cpp/language/noexcept_spec
+     */
+    OrgChart::OrgChart(OrgChart &&chart) noexcept
+            : _root{chart._root}, _node_map{std::move(chart._node_map)} {
+//        std::cout << "Rvalue ctor\n";
+        chart._root = nullptr;
+//        chart._node_map = std::unordered_map<std::string, Node *>();
     }
 
     OrgChart::~OrgChart() {
-        if (_root == nullptr) return;
-        std::queue<Node *> node_queue;
-        node_queue.push(_root);
-        while (!node_queue.empty()) {
-            Node *curr_node = node_queue.front();
-            node_queue.pop();
-            for (Node *child: curr_node->getChildren()) {
-                node_queue.push(child);
+//        std::cout << "Destroyed\n";
+        if (_root != nullptr) {
+            std::queue<Node *> node_queue;
+            Node *curr_node;
+            node_queue.push(_root);
+            while (!node_queue.empty()) {
+                curr_node = node_queue.front();
+                node_queue.pop();
+                for (Node *child: curr_node->getChildren()) {
+                    node_queue.push(child);
+                }
+                delete curr_node;
             }
-            delete curr_node;
         }
     }
 
     OrgChart &OrgChart::operator=(const OrgChart &chart) {
-        OrgChart new_chart{chart};
-        std::swap(_root, new_chart._root);
-        std::swap(_node_map, new_chart._node_map);
+        if (this != &chart) { // check if this == this (chart)
+            OrgChart new_chart{chart};
+            std::swap(_root, new_chart._root);
+            std::swap(_node_map, new_chart._node_map);
+        }
         return *this;
     }
 
     OrgChart &OrgChart::operator=(OrgChart &&chart) noexcept {
+        _root = chart._root;
+        chart._root = nullptr;
+        _node_map = std::move(chart._node_map);
         return *this;
     }
 
-    OrgChart &OrgChart::add_root(const std::string &root) { // todo
+    OrgChart &OrgChart::add_root(const std::string &root) {
         if (_root == nullptr) {
             _root = new Node{root};
             _node_map[root] = _root;
         } else {
-            _node_map.erase(root);
+            _node_map.erase(root); // todo
+            _node_map[root] = _root;
             _root->setName(root);
         }
         return *this;
@@ -66,7 +83,7 @@ namespace ariel {
 
     OrgChart &OrgChart::add_sub(const std::string &parent, const std::string &child) {
         // https://stackoverflow.com/questions/6897737/using-the-operator-efficiently-with-c-unordered-map
-        Node *curr_parent = _node_map[parent];
+        Node *curr_parent = _node_map[parent]; // hashes parent string, if not found value is NULL
         if (curr_parent == nullptr) { throw std::runtime_error{"Could not find parent node!"}; }
         Node *new_child = new Node(child);
         curr_parent->addChild(new_child);

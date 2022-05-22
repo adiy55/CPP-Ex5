@@ -14,13 +14,7 @@ namespace ariel {
     }
 
     bool Iterator::operator!=(const Iterator &other) const {
-        return !(this->operator==(other));
+        return !(*this == other);
     }
-
-//    Iterator &Iterator::operator++() {
-//        this->next();
-//        return *this;
-//    }
-
 
 }

@@ -7,21 +7,15 @@ namespace ariel {
             : Iterator{ptr}, _node_stack{} {
     }
 
-
-    Iterator &PreorderIterator::operator++() {
-        this->next();
-        return *this;
-    }
-
-    void PreorderIterator::next() {
+    PreorderIterator &PreorderIterator::operator++() {
         this->pushChildren(_ptr);
         if (_node_stack.empty()) {
             _ptr = nullptr;
         } else {
-            Node *curr_node = _node_stack.top();
+            _ptr = _node_stack.top();
             _node_stack.pop();
-            _ptr = curr_node;
         }
+        return *this;
     }
 
     void PreorderIterator::pushChildren(Node *node) {

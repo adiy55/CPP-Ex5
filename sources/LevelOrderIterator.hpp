@@ -11,15 +11,15 @@ namespace ariel {
     private:
         std::queue<Node *> _node_queue;
 
-        void next();
-
         void pushChildren(Node* node);
 
     public:
 
-        explicit LevelOrderIterator(Node* ptr = nullptr);
+        LevelOrderIterator(Node* ptr = nullptr);
 
-        Iterator& operator++() override;
+        LevelOrderIterator& operator++() override;
+
+//        LevelOrderIterator operator++(int);
 
     };
 

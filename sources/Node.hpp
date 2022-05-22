@@ -12,7 +12,7 @@ namespace ariel {
         std::string _name;
         std::vector<Node *> _children;
 
-        static void validateName(const std::string& name) ;
+        static void validateName(const std::string &name);
 
     public:
 
@@ -22,11 +22,9 @@ namespace ariel {
 
         std::vector<Node *> &getChildren();
 
-        std::size_t size() const;
+        void setName(const std::string &name);
 
-        void setName(const std::string& name);
-
-        std::string& getName();
+        std::string &getName();
 
         friend std::ostream &operator<<(std::ostream &out, const Node &node);
 
