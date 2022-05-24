@@ -29,8 +29,8 @@ int main() {
         cout << "To insert root node enter 1\n"
                 "To insert child node enter 2\n"
                 "To print current chart enter 3\n"
-                "To reset default chart insert 4\n"
-                "To clear chart insert 5\n"
+                "To reset default chart enter 4\n"
+                "To clear chart enter 5\n"
                 "Enter any other character to exit" << endl;
         cin >> mode;
         if (mode == 1) {

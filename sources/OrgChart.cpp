@@ -132,7 +132,7 @@ namespace ariel {
      */
     void OrgChart::printChart(std::ostream &out, unsigned int depth, Node *node) {
         if (depth == 0) {
-            out << "\033[1;34m" << (*node) << "\033[0m\n";
+            out << (*node) << '\n';
         } else {
             std::string spaces(depth * 3, ' '); // 3 spaces per depth number
             out << spaces << "+--" << (*node) << '\n';

@@ -9,6 +9,10 @@
  */
 
 /*
+ * inheritance visibility modes: https://www.codespeedy.com/visibility-modes-in-cpp/
+ */
+
+/*
  * https://en.cppreference.com/w/cpp/language/abstract_class
  * "Defines an abstract type which cannot be instantiated, but can be used as a base class."
  * "No objects of an abstract class can be created"
@@ -28,7 +32,7 @@ namespace ariel {
 
         void setPointer(Node *ptr);
 
-        Node* getPointer() const;
+        Node *getPointer() const;
 
     public:
 
