@@ -66,7 +66,7 @@ namespace ariel {
      * swaps container contents.
      */
     OrgChart &OrgChart::operator=(const OrgChart &chart) {
-        if (this != &chart) { // check if this == this (chart) // todo: add test case? throw?
+        if (this != &chart) { // check if this == this (chart)
             OrgChart new_chart{chart};
             std::swap(_root, new_chart._root); // swap _root class member (swap pointers)
             std::swap(_node_map, new_chart._node_map);
@@ -132,7 +132,7 @@ namespace ariel {
      */
     void OrgChart::printChart(std::ostream &out, unsigned int depth, Node *node) {
         if (depth == 0) {
-            out << (*node) << '\n';
+            out << "\033[1;34m" << (*node) << "\033[0m\n";
         } else {
             std::string spaces(depth * 3, ' '); // 3 spaces per depth number
             out << spaces << "+--" << (*node) << '\n';

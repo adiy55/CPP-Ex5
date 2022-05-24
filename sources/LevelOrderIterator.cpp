@@ -13,7 +13,7 @@ namespace ariel {
      * Prefix increment.
      * Each increment executes the next iteration of BFS (level order) traversal.
      */
-    LevelOrderIterator &LevelOrderIterator::operator++() { // todo: test case for nullptr
+    LevelOrderIterator &LevelOrderIterator::operator++() {
         this->pushChildren(this->getPointer()); // add children nodes of current node
         if (_node_queue.empty()) {
             this->setPointer(nullptr);
@@ -25,7 +25,7 @@ namespace ariel {
     }
 
     LevelOrderIterator LevelOrderIterator::operator++(int) {
-        LevelOrderIterator tmp{*this}; // todo: check ctor
+        LevelOrderIterator tmp{*this};
         ++(*this);
         return tmp;
     }

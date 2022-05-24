@@ -19,8 +19,6 @@ void clearBuffer();
 
 void printChart(OrgChart &c);
 
-int chooseIterator();
-
 void executeIterator(Iterator &begin, Iterator &end);
 
 // To compile program run: clang++-9 -std=c++2a sources/*.cpp Main.cpp -Isources -o main -g
@@ -40,9 +38,8 @@ int main() {
         } else if (mode == 2) {
             insertChild(chart);
         } else if (mode == 3) {
-            cout << "Current chart is:\n" << chart << endl;
+            cout << "Current chart is:\n" << "\033[1;34m" << chart << "\033[0m\n";
             printChart(chart);
-            cout << '\n';
         } else if (mode == 4) {
             resetChart(chart);
         } else if (mode == 5) {
@@ -60,7 +57,7 @@ void insertRoot(OrgChart &c) {
         string str;
         cout << "Insert root name\n";
         clearBuffer();
-        std::getline(cin, str); // todo
+        std::getline(cin, str);
         c.add_root(str);
     }
     catch (exception &ex) {
@@ -76,7 +73,6 @@ void insertChild(OrgChart &c) {
         clearBuffer();
         std::getline(cin, parent);
         cout << "Insert child name\n";
-        clearBuffer();
         std::getline(cin, child);
         c.add_sub(parent, child);
     }
@@ -100,41 +96,30 @@ void resetChart(OrgChart &c) {
     }
 }
 
-int chooseIterator() {
-    int mode;
-    try {
-        cout << "For level order enter 1\n"
-                "For pre-order enter 2\n"
-                "For reverse level order enter 3\n";
-        cin >> mode;
-        if (mode < 1 || mode > 3) { throw std::invalid_argument{"Invalid iterator selection!"}; }
-    } catch (exception &ex) {
-        cout << "Invalid input: " << ex.what() << endl;
-    }
-    return mode;
-}
-
 void executeIterator(Iterator &begin, Iterator &end) {
     for (; begin != end; ++begin) {
-        cout << (*begin) << " ";
+        cout << "\033[1;31m" << (*begin) << "\033[0m" << " ";
     }
     cout << '\n';
 }
 
 void printChart(OrgChart &c) {
-    int mode = chooseIterator();
-    if (mode == 1) {
-        LevelOrderIterator start = c.begin_level_order();
-        LevelOrderIterator fin = c.end_level_order();
-        executeIterator(start, fin);
-    } else if (mode == 2) {
-        PreorderIterator start = c.begin_preorder();
-        PreorderIterator fin = c.end_preorder();
-        executeIterator(start, fin);
-    } else {
-        RLevelOrderIterator start = c.begin_reverse_order();
-        RLevelOrderIterator fin = c.reverse_order();
-        executeIterator(start, fin);
+    try {
+        cout << "Level Order:\n";
+        LevelOrderIterator lvl_start = c.begin_level_order();
+        LevelOrderIterator lvl_fin = c.end_level_order();
+        executeIterator(lvl_start, lvl_fin);
+        cout << "Preorder:\n";
+        PreorderIterator pre_start = c.begin_preorder();
+        PreorderIterator pre_fin = c.end_preorder();
+        executeIterator(pre_start, pre_fin);
+        cout << "Reverse Level Order:\n";
+        RLevelOrderIterator rlvl_start = c.begin_reverse_order();
+        RLevelOrderIterator rlvl_fin = c.reverse_order();
+        executeIterator(rlvl_start, rlvl_fin);
+        cout << '\n';
+    } catch (exception &ex) {
+        cout << ex.what() << endl;
     }
 }
 

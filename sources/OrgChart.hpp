@@ -37,7 +37,7 @@ namespace ariel {
 
         OrgChart &operator=(const OrgChart &chart);
 
-        OrgChart &operator=(OrgChart &&chart) noexcept; // todo
+        OrgChart &operator=(OrgChart &&chart) noexcept;
 
         OrgChart &add_root(const std::string &root);
 

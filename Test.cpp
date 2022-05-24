@@ -69,11 +69,10 @@ TEST_CASE ("Invalid names") {
                     CHECK_THROWS(organization.add_root(""));
         }
 
-                SUBCASE("Case 3- not alpha") {
+                SUBCASE("Case 3- does not begin with alpha") {
                     CHECK_THROWS(organization.add_root("&*)("));
                     CHECK_THROWS(organization.add_root("$$$$"));
-//                    CHECK_THROWS(organization.add_root("24"));
-//                    CHECK_THROWS(organization.add_root("CE0")); // last char is zero
+                    CHECK_THROWS(organization.add_root("24"));
         }
     }
 
@@ -90,25 +89,18 @@ TEST_CASE ("Invalid names") {
         }
 
                 SUBCASE("Case 3- not alpha") {
-//                    CHECK_THROWS(organization.add_sub("CEO", "S1GN"));
                     CHECK_THROWS(organization.add_sub("CEO", "-3.5"));
-//                    CHECK_THROWS(organization.add_sub("CEO", "C00")); // last char is zero
         }
                 SUBCASE("No existing position in the organization") {
                     CHECK_THROWS(organization.add_sub("CTO", "VP_SW"));
                     CHECK_THROWS(organization.add_sub("COO", "COO"));
         }
 
-//                SUBCASE("Add subordinate to same position") {
-//                    CHECK_THROWS(organization.add_sub("CEO", "CEO"));
-//            organization.add_sub("CEO", "CTO");
-//                    CHECK_THROWS(organization.add_sub("CTO", "CTO"));
-//        }
-
-//                SUBCASE("Loop subordinates") {
-//            organization.add_sub("CEO", "CTO");
-//                    CHECK_THROWS(organization.add_sub("CTO", "CEO"));
-//        }
+                SUBCASE("Add subordinate to same position") {
+                    CHECK_NOTHROW(organization.add_sub("CEO", "CEO"));
+            organization.add_sub("CEO", "CTO");
+                    CHECK_NOTHROW(organization.add_sub("CTO", "CTO"));
+        }
 
     }
 

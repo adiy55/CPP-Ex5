@@ -24,11 +24,10 @@ namespace ariel {
 
     std::string &Node::getName() { return _name; }
 
-    void Node::validateName(const std::string &name) { // todo: check regex
-        std::regex valid_format{R"([a-zA-z_\d][a-zA-z_\d\s.]*)"};
+    void Node::validateName(const std::string &name) {
+        std::regex valid_format{R"([a-zA-z][\w\s_.]*)"}; // \w = shorthand for alpha or digits
         // regex_match checks for a full match
         if (!std::regex_match(name, valid_format)) { throw std::invalid_argument{"Invalid name!"}; }
     }
-
 
 }
