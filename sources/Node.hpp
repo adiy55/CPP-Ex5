@@ -6,7 +6,7 @@
 
 namespace ariel {
 
-    struct Node {
+    class Node {
     private:
 
         std::string _name;

@@ -1,13 +1,20 @@
-#include <queue>
 #include "RLevelOrderIterator.hpp"
+#include <queue>
 
 namespace ariel {
 
+    /**
+     * @param ptr Default value is nullptr
+     */
     RLevelOrderIterator::RLevelOrderIterator(Node *ptr)
             : Iterator{ptr} {
         this->pushLevels(_ptr);
     }
 
+    /**
+     * Prefix increment.
+     * Each increment removes top node in the stack.
+     */
     RLevelOrderIterator &RLevelOrderIterator::operator++() {
         if (_node_stack.empty()) {
             _ptr = nullptr;
@@ -18,6 +25,16 @@ namespace ariel {
         return *this;
     }
 
+    RLevelOrderIterator RLevelOrderIterator::operator++(int) {
+        RLevelOrderIterator tmp{*this};
+        ++(*this);
+        return tmp;
+    }
+
+    /**
+     * Helper function- insert node pointers to stack in reverse BFS order.
+     * @param node
+     */
     void RLevelOrderIterator::pushLevels(Node *node) {
         if (node != nullptr) {
             std::queue<Node *> node_queue;
@@ -28,17 +45,12 @@ namespace ariel {
                 _node_stack.push(curr_node);
                 node_queue.pop();
                 std::vector<Node *> children = curr_node->getChildren();
+                // add children to queue in reverse order -> order in stack will be from left to right
                 std::for_each(children.rbegin(), children.rend(),
                               [&node_queue](Node *child) { node_queue.push(child); });
             }
-            _ptr = _node_stack.top();
+            _ptr = _node_stack.top(); // init pointer to first element
             _node_stack.pop();
         }
-    }
-
-    RLevelOrderIterator RLevelOrderIterator::operator++(int) {
-        RLevelOrderIterator tmp{*this};
-        ++(*this);
-        return tmp;
     }
 }

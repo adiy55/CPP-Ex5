@@ -2,9 +2,14 @@
 #define CPP_EX5_PREORDERITERATOR_HPP
 
 #include "Iterator.hpp"
-#include <vector>
 #include "Node.hpp"
 #include <stack>
+
+/*
+ * https://en.cppreference.com/w/cpp/container/stack
+ * stack top: returns reference to top element.
+ * stack pop: removes top element from stack (returns void!)
+ */
 
 namespace ariel {
 
@@ -14,7 +19,7 @@ namespace ariel {
 
         std::stack<Node *> _node_stack;
 
-        void pushChildren(Node* node);
+        void pushChildren(Node *node);
 
     public:
 

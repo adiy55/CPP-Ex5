@@ -8,9 +8,7 @@ namespace ariel {
         validateName(_name);
     }
 
-    void Node::addChild(Node *child) {
-        _children.push_back(child);
-    }
+    void Node::addChild(Node *child) { _children.push_back(child); }
 
     std::vector<Node *> &Node::getChildren() { return _children; }
 
@@ -19,11 +17,14 @@ namespace ariel {
         return out;
     }
 
-    void Node::setName(const std::string &name) { _name = name; }
+    void Node::setName(const std::string &name) {
+        validateName(name);
+        _name = name;
+    }
 
     std::string &Node::getName() { return _name; }
 
-    void Node::validateName(const std::string &name) {
+    void Node::validateName(const std::string &name) { // todo: check regex
         std::regex valid_format{R"([a-zA-z_\d][a-zA-z_\d\s.]*)"};
         // regex_match checks for a full match
         if (!std::regex_match(name, valid_format)) { throw std::invalid_argument{"Invalid name!"}; }

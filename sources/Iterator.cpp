@@ -9,12 +9,8 @@ namespace ariel {
 
     std::string *Iterator::operator->() const { return &(_ptr->getName()); }
 
-    bool Iterator::operator==(const Iterator &other) const {
-        return (_ptr == other._ptr);
-    }
+    bool Iterator::operator==(const Iterator &other) const { return (_ptr == other._ptr); }
 
-    bool Iterator::operator!=(const Iterator &other) const {
-        return !(*this == other);
-    }
+    bool Iterator::operator!=(const Iterator &other) const { return !(*this == other); }
 
 }
