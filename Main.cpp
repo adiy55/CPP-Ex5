@@ -15,6 +15,14 @@ void insertChild(OrgChart &c);
 
 void resetChart(OrgChart &c);
 
+void clearBuffer();
+
+void printChart(OrgChart &c);
+
+int chooseIterator();
+
+void executeIterator(Iterator &begin, Iterator &end);
+
 // To compile program run: clang++-9 -std=c++2a sources/*.cpp Main.cpp -Isources -o main -g
 int main() {
     OrgChart chart;
@@ -33,6 +41,8 @@ int main() {
             insertChild(chart);
         } else if (mode == 3) {
             cout << "Current chart is:\n" << chart << endl;
+            printChart(chart);
+            cout << '\n';
         } else if (mode == 4) {
             resetChart(chart);
         } else if (mode == 5) {
@@ -49,7 +59,8 @@ void insertRoot(OrgChart &c) {
     try {
         string str;
         cout << "Insert root name\n";
-        cin >> str;
+        clearBuffer();
+        std::getline(cin, str); // todo
         c.add_root(str);
     }
     catch (exception &ex) {
@@ -62,9 +73,11 @@ void insertChild(OrgChart &c) {
         string parent;
         string child;
         cout << "Insert parent name\n";
-        cin >> parent;
+        clearBuffer();
+        std::getline(cin, parent);
         cout << "Insert child name\n";
-        cin >> child;
+        clearBuffer();
+        std::getline(cin, child);
         c.add_sub(parent, child);
     }
     catch (exception &ex) {
@@ -86,3 +99,44 @@ void resetChart(OrgChart &c) {
         cout << "Invalid input: " << ex.what() << endl;
     }
 }
+
+int chooseIterator() {
+    int mode;
+    try {
+        cout << "For level order enter 1\n"
+                "For pre-order enter 2\n"
+                "For reverse level order enter 3\n";
+        cin >> mode;
+        if (mode < 1 || mode > 3) { throw std::invalid_argument{"Invalid iterator selection!"}; }
+    } catch (exception &ex) {
+        cout << "Invalid input: " << ex.what() << endl;
+    }
+    return mode;
+}
+
+void executeIterator(Iterator &begin, Iterator &end) {
+    for (; begin != end; ++begin) {
+        cout << (*begin) << " ";
+    }
+    cout << '\n';
+}
+
+void printChart(OrgChart &c) {
+    int mode = chooseIterator();
+    if (mode == 1) {
+        LevelOrderIterator start = c.begin_level_order();
+        LevelOrderIterator fin = c.end_level_order();
+        executeIterator(start, fin);
+    } else if (mode == 2) {
+        PreorderIterator start = c.begin_preorder();
+        PreorderIterator fin = c.end_preorder();
+        executeIterator(start, fin);
+    } else {
+        RLevelOrderIterator start = c.begin_reverse_order();
+        RLevelOrderIterator fin = c.reverse_order();
+        executeIterator(start, fin);
+    }
+}
+
+// clear buffer before taking new line
+void clearBuffer() { cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); }
