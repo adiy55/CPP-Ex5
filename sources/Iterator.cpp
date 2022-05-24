@@ -13,4 +13,10 @@ namespace ariel {
 
     bool Iterator::operator!=(const Iterator &other) const { return !(*this == other); }
 
+    // protected methods for derived classes
+
+    void Iterator::setPointer(Node *ptr) { _ptr = ptr; }
+
+    Node *Iterator::getPointer() const { return _ptr; }
+
 }

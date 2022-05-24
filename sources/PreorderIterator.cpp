@@ -14,11 +14,11 @@ namespace ariel {
      * Each increment executes the next iteration of DFS (depth first) traversal.
      */
     PreorderIterator &PreorderIterator::operator++() {
-        this->pushChildren(_ptr);
+        this->pushChildren(this->getPointer());
         if (_node_stack.empty()) {
-            _ptr = nullptr;
+            this->setPointer(nullptr);
         } else {
-            _ptr = _node_stack.top();
+            this->setPointer(_node_stack.top());
             _node_stack.pop();
         }
         return *this;

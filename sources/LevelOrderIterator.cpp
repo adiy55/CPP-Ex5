@@ -14,11 +14,11 @@ namespace ariel {
      * Each increment executes the next iteration of BFS (level order) traversal.
      */
     LevelOrderIterator &LevelOrderIterator::operator++() { // todo: test case for nullptr
-        this->pushChildren(_ptr); // add children nodes of current node
+        this->pushChildren(this->getPointer()); // add children nodes of current node
         if (_node_queue.empty()) {
-            _ptr = nullptr;
+            this->setPointer(nullptr);
         } else { // update pointer to next node in queue
-            _ptr = _node_queue.front();
+            this->setPointer(_node_queue.front());
             _node_queue.pop();
         }
         return *this;

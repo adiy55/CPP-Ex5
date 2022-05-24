@@ -8,7 +8,7 @@ namespace ariel {
      */
     RLevelOrderIterator::RLevelOrderIterator(Node *ptr)
             : Iterator{ptr} {
-        this->pushLevels(_ptr);
+        this->pushLevels(this->getPointer());
     }
 
     /**
@@ -17,9 +17,9 @@ namespace ariel {
      */
     RLevelOrderIterator &RLevelOrderIterator::operator++() {
         if (_node_stack.empty()) {
-            _ptr = nullptr;
+            this->setPointer(nullptr);
         } else {
-            _ptr = _node_stack.top();
+            this->setPointer(_node_stack.top());
             _node_stack.pop();
         }
         return *this;
@@ -49,7 +49,7 @@ namespace ariel {
                 std::for_each(children.rbegin(), children.rend(),
                               [&node_queue](Node *child) { node_queue.push(child); });
             }
-            _ptr = _node_stack.top(); // init pointer to first element
+            this->setPointer(_node_stack.top()); // init pointer to first element
             _node_stack.pop();
         }
     }

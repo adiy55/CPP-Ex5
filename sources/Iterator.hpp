@@ -20,9 +20,15 @@ namespace ariel {
 
     class Iterator {
 
-    protected:
+    private:
 
         Node *_ptr;
+
+    protected:
+
+        void setPointer(Node *ptr);
+
+        Node* getPointer() const;
 
     public:
 
